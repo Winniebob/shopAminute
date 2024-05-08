@@ -1,0 +1,35 @@
+body {
+    background: -webkit-linear-gradient(90deg, #f2cfcb, #ededed);
+    background: linear-gradient(90deg, #f2cfcb, #ededed);
+}
+
+a {
+    text-decoration: none;
+    color: brown;
+    font-size: 16px;
+}
+
+h1, h3, div, form {
+    text-align: center;
+}
+
+div {
+    padding: 10px;
+    margin: 20px 190px 20px 190px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 4px -4px gray;
+    background: -webkit-linear-gradient(90deg, #f2cfcb, #ededed);
+    background: linear-gradient(90deg, #f2cfcb, #ededed);
+}
+
+.footer {
+    bottom: 0;
+    right: 0;
+    position: fixed;
+}
+
+.aut {
+    top: 0;
+    left: 0;
+    position: fixed;
+}

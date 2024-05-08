@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        h3 {
+            color: #333;
+            text-align: center;
+        }
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+        img {
+            width: 300px;
+            border-radius: 5px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .product {
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h3>Корзина товаров</h3>
+    <hr>
+    <div class="product" th:each="product : ${cart_product}">
+        <img th:src="'/img/' + ${product.imageList[0].getFileName()}">
+        <br>
+        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
+        <hr>
+    </div>
+    <h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+    <a href="/order/create">Оформить заказ</a>
+</div>
+</body>
+</html>

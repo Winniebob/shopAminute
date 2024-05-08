@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет администратора</title>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .product-container {
+            display: inline-block;
+            margin: 20px;
+            vertical-align: top;
+        }
+
+        .product-info {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .product-info p {
+            margin-bottom: 5px;
+        }
+
+        .product-info img {
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .catalog-container {
+            text-align: center;
+        }
+
+        .catalog-item {
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .catalog-item img {
+            border-radius: 8px;
+        }
+
+        .catalog-item a {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .catalog-item p {
+            color: #888;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Личный кабинет администратора</h1>
+    <form method="post" th:action="@{/logout}">
+        <button type="submit">Выйти из личного кабинета</button>
+    </form>
+    <a href="admin/product/add">Добавить товар</a>
+    <hr>
+    <div class="product-container" th:each="product : ${products}">
+        <div class="product-info">
+            <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
+            <p th:text="'Описание: ' + ${product.getDescription()}"></p>
+            <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+            <p th:text="'Cклад: ' + ${product.getWarehouse()}"></p>
+            <p th:text="'Продавец: ' + ${product.getSeller()}"></p>
+            <p th:text="'Категория: ' + ${product.getCategory().getName()}"></p>
+            <a th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
+            <br>
+            <a th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удаление товара</a>
+        </div>
+    </div>
+    <h3>Каталог товаров:</h3>
+    <div class="catalog-container" th:each="product : ${products}">
+        <div class="catalog-item">
+            <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+            <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+            <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="#">Вернуться</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление товара</title>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select {
+            width: calc(100% - 22px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #555;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        div.error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        p.note {
+            color: #555;
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h3>Добавление товара</h3>
+    <form th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
+        <label for="title">Наименование товара: </label>
+        <input type="text" th:field="*{title}" placeholder="Наименование" id="title"><br>
+        <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        <br>
+
+        <label for="description">Описание товара: </label>
+        <textarea th:field="*{description}" placeholder="Описание" id="description"></textarea><br>
+        <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        <br>
+
+        <label for="price">Цена товара: </label>
+        <input type="number" th:field="*{price}" min="1" step="0.00" placeholder="Цена" id="price"><br>
+        <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        <br>
+
+        <label for="warehouse">Местонахождение товара: </label>
+        <input type="text" th:field="*{warehouse}" placeholder="Местонахождение" id="warehouse"><br>
+        <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+        <br>
+
+        <label for="category">Категория товара: </label>
+        <select name="category" th:field="*{category}" id="category">
+            <option th:each="element : ${category}" th:text="${element.getName()}" th:value="${element.getId()}"></option>
+        </select><br>
+        <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+        <br>
+
+        <label for="seller">Данные о продавце: </label>
+        <textarea th:field="*{seller}" placeholder="Продавец" id="seller"></textarea><br>
+        <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+        <br>
+
+        <p style="color: red">Можно добавить до 5 фотографий. Первая фотография будет основной для карточки товара.</p>
+        <input type="file" name="file_one"><br>
+        <input type="file" name="file_two"><br>
+        <input type="file" name="file_three"><br>
+        <input type="file" name="file_four"><br>
+        <input type="file" name="file_five"><br>
+        <br>
+
+        <input type="submit" value="Добавить">
+    </form>
+</div>
+</body>
+</html>

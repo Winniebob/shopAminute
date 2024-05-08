@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <style>
+        body {
+            background: url('one.jpg') repeat;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1, h3 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .product {
+            width: calc(50% - 10px);
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fafafa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .product img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .product a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .product p {
+            margin: 10px 0 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1>Личный кабинет</h1>
+        <form method="post" th:action="@{/logout}">
+            <button type="submit">Выйти из личного кабинета</button>
+        </form>
+        <br>
+        <form method="get" th:action="@{/cart}">
+            <button type="submit">Корзина</button>
+        </form>
+        <br>
+        <form method="get" th:action="@{/orders}">
+            <input type="submit" value="Заказы">
+        </form>
+    </div>
+    <h3>Сортировка, поиск, фильтрация:</h3>
+    <form th:method="POST" th:action="@{/person account/product/search}">
+        <fieldset>
+            <legend>Выберите параметры для сортировки, поиска, фильтрации:</legend>
+            <label for="search">Поиск по наименованию</label>
+            <input type="text" id="search" name="search" th:value="*{value_search}">
+            <br>
+            <p>Цена, P</p>
+            <label for="ot">От</label>
+            <input type="text" name="ot" id="ot" th:value="*{value_price_ot}">
+            <label for="do">До</label>
+            <input type="text" name="do" id="do" th:value="*{value_price_do}">
+            <br>
+            <br>
+            <div>
+                <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+                <label for="ascending_price">Отсортировать по возрастанию цены</label>
+                <input type="radio" id="descending_price" name="price"
+                       value="sorted_by_descending_price">
+                <label for="descending_price">Отсортировать по убыванию цены</label>
+                <br>
+                <br>
+                <input type="submit" value="Найти">
+            </div>
+        </fieldset>
+    </form>
+    <hr>
+    <h3>Результат поиска, cортировки, фильтрации:</h3>
+    <div class="products">
+        <div class="product" th:each="product : ${search_product}">
+            <img th:src="'/img/' + ${product.imageList[0].getFileName()}">
+            <br>
+            <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+            <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        </div>
+    </div>
+    <hr>
+    <h3>Каталог товаров:</h3>
+    <div class="products">
+        <div class="product" th:each="product : ${products}">
+            <img th:src="'/img/' + ${product.imageList[0].getFileName()}">
+            <br>
+            <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+            <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+            <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="#">Вернуться</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h3>Заказы</h3>
+    <div th:each="order : ${orders}">
+        <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
+        <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">
+        <p th:text="'Наименование: ' + ${order.getProduct().getTitle()}"></p>
+        <p th:text="'Количество: ' + ${order.getCount()}"></p>
+        <p th:text="'Цена: ' + ${order.getPrice()}"></p>
+        <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+        <p th:text="'Cтатус: ' + ${order.getStatus()}"></p>
+    </div>
+</div>
+</body>
+</html>
